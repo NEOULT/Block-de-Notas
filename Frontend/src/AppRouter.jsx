@@ -26,8 +26,8 @@ const AppRouter = () => {
     
     <Router>
       <Routes>
-        <Route path="https://matrixnotes.netlify.app/login" element={<Login setAuthenticated={setAuthenticated} />} />
-        <Route path="https://matrixnotes.netlify.app/" element={authenticated ? <App /> : <Navigate to="https://matrixnotes.netlify.app/login" replace />} />
+        <Route path="/login" element={<Login setAuthenticated={setAuthenticated} />} />
+        <Route path="/" element={authenticated ? <App /> : <Navigate to="/login" replace />} />
       </Routes>
     </Router>
   );
