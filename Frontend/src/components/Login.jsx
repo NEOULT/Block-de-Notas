@@ -89,7 +89,7 @@ const Login = ({ setAuthenticated }) => {
       setSuccessMessage(isLogin ? "Login successful!" : "Registration successful!");
       setErrorMessage("");
     } catch (error) {
-      setErrorMessage("No es posible en este momento, intente más tarde.");
+      setErrorMessage(error.message);
       setSuccessMessage("");
     }
   };
