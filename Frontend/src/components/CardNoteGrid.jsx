@@ -6,7 +6,7 @@ const CardNoteGridWrapper = styled.div`
     grid-template-columns: repeat(3, 1fr);
     column-gap: 10px;
     row-gap: 10px;
-    max-height: 80vh; /* Altura máxima del contenedor */
+    max-height: 70vh; /* Altura máxima del contenedor */
     overflow-y: auto; /* Desplazamiento vertical */
 
     @media (max-width: 1200px) {
