@@ -5,7 +5,9 @@ import notesRoutes from './routes/note.js';
 import userRoutes from './routes/user.js';
 import authRoutes from './routes/auth.js';
 
-// Crear la aplicación express y añadirle los middlewares
+console.log(process.env.DB_NAME);
+
+// Crear la aplicación express
 const app = express();
 app.use(cors());
 app.use(morgan('dev'));

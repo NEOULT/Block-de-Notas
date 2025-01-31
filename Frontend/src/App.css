@@ -12,7 +12,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: lightdark(#333,#ccc);
   position: relative;
   overflow: hidden;
   margin: 0;
@@ -24,7 +24,7 @@ body {
   left: 0;
   width: 100vw; /* 100% del ancho de la ventana */
   height: 100vh; /* 100% del alto de la ventana */
-  background: black;
+  background: #0d1117;
   z-index: -1;
 }
 

@@ -5,7 +5,7 @@ import styled from "styled-components";
 const HeaderWrapper = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
 `;
 
 const Header = (props) => {

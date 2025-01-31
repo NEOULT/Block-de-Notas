@@ -1,4 +1,6 @@
+//import { token } from "morgan";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from 'styled-components';
 
 // Definir la animación de desvanecimiento
@@ -18,6 +20,7 @@ const MatrixCanvas = styled.canvas`
 `;
 
 const MatrixEffect = () => {
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState(true);
   const [fadeOutEffect, setFadeOutEffect] = useState(false);
 
@@ -71,7 +74,10 @@ const MatrixEffect = () => {
       setTimeout(() => {
         setIsActive(false);
         setFadeOutEffect(false); // Restablece el estado de desvanecimiento después de que la animación haya terminado
+        localStorage.removeItem('authToken');
+        navigate('/login');
       }, 2000); // Tiempo de la animación de desvanecimiento
+      
     } else {
       setIsActive(true);
     }
