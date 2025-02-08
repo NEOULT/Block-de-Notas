@@ -75,7 +75,7 @@ const MatrixEffect = () => {
         setIsActive(false);
         setFadeOutEffect(false); // Restablece el estado de desvanecimiento después de que la animación haya terminado
         localStorage.removeItem('authToken');
-        navigate('/login');
+        navigate('/login', { replace: true });
       }, 2000); // Tiempo de la animación de desvanecimiento
       
     } else {
