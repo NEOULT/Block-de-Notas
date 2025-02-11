@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const CardNoteGridWrapper = styled.div`
     margin: auto;
@@ -33,12 +34,14 @@ const CardNoteGridWrapper = styled.div`
     }
 `;
 
-const CardNoteGrid = (props) => {
+const CardNoteGrid = ({ children, cardConfig }) => {
     return (
         <CardNoteGridWrapper>
-            {props.children}
+            {React.Children.map(children, child => 
+                React.cloneElement(child, { cardConfig })
+            )}
         </CardNoteGridWrapper>
     );
-}
+};
 
 export default CardNoteGrid;

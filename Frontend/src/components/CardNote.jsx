@@ -2,13 +2,13 @@ import styled from "styled-components";
 import PropTypes from 'prop-types';
 
 const CardNoteWrapper = styled.div`
-    background-color: rgba(28, 30, 34, 0.85); /* Fondo oscuro translúcido */
+    background-color: ${props => props.backgroundColor || 'rgba(28, 30, 34, 0.85)'}; /* Fondo oscuro translúcido */
     padding: 20px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     margin: 10px;
-    border: 1px solid #04d9b2; /* Borde verde */
+    border: 1px solid ${props => props.borderColor || '#04d9b2'}; /* Borde verde */
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5); /* Sombra para darle profundidad */
     animation: fadeIn 1s ease-in-out;
     max-width: 400px; /* Ancho máximo para la tarjeta */
@@ -30,7 +30,7 @@ const CardNoteBody = styled.div`
 
     > h2, p {
         margin: 5px 0;
-        color: #04d9b2; /* Texto verde */
+        color: ${props => props.textColor || '#04d9b2'}; /* Texto verde */
         font-family: 'Courier New', Courier, monospace; /* Fuente tipo consola */
         white-space: nowrap; /* Evitar que el texto se desborde en varias líneas */
         overflow: hidden; /* Ocultar contenido desbordado */
@@ -82,8 +82,12 @@ const ActionButton = styled.button`
 
 const CardNote = (props) => {
     return (
-        <CardNoteWrapper>
-            <CardNoteBody>
+        <CardNoteWrapper
+            backgroundColor={props.cardConfig.backgroundColor}
+            borderColor={props.cardConfig.borderColor}
+            textColor={props.cardConfig.textColor}
+        >
+            <CardNoteBody textColor={props.cardConfig.textColor}>
                 <h2>{props.title}</h2>
                 <p>{props.description}</p>
             </CardNoteBody>
@@ -100,6 +104,11 @@ CardNote.propTypes = {
     description: PropTypes.string.isRequired,
     onEdit: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,
+    cardConfig: PropTypes.shape({
+        backgroundColor: PropTypes.string,
+        borderColor: PropTypes.string,
+        textColor: PropTypes.string
+    }).isRequired
 };
 
 export default CardNote;

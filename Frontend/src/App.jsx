@@ -10,6 +10,8 @@ import styled, { keyframes } from 'styled-components';
 import { deleteApiNote, getApiNotes } from './Services';
 import CreateNoteModal from './components/CreateNoteModal';
 import EditNoteModal from './components/EditNoteModal';
+import ConfigButton from './components/ConfigButton';
+import ConfigModal from './components/ConfigModal'; // Importa el modal de configuración
 
 // Definir la animación de descenso
 const slideDown = keyframes`
@@ -35,6 +37,12 @@ function App() {
   const [noteToEdit, setNoteToEdit] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [filteredNotes, setFilteredNotes] = useState([]);
+  const [configModalOpen, setConfigModalOpen] = useState(false); // Estado para el modal de configuración
+  const [cardConfig, setCardConfig] = useState({
+    backgroundColor: '#ffffff',
+    borderColor: '#04d9b2',
+    textColor: '#000000'
+  });
 
   async function getNotes() {
     const notes = await getApiNotes();
@@ -51,6 +59,14 @@ function App() {
       setFilteredNotes(filteredNotes);
     }
   }, [searchValue]);
+
+  useEffect(() => {
+    // Cargar la configuración desde el localStorage al iniciar la aplicación
+    const savedConfig = localStorage.getItem('cardConfig');
+    if (savedConfig) {
+      setCardConfig(JSON.parse(savedConfig));
+    }
+  }, []);
 
   function getFilterNotes() {
 
@@ -90,16 +106,33 @@ function App() {
     }
   }
 
+  const handleConfigClick = () => {
+    setConfigModalOpen(true); // Abre el modal de configuración
+  };
+
+  const handleConfigSave = (config) => {
+    // Guarda la configuración de las tarjetas
+    setCardConfig(config);
+    localStorage.setItem('cardConfig', JSON.stringify(config)); // Guardar en localStorage
+    console.log('Configuración guardada', config);
+  };
+
   return (
     <div className="AppWrapper">
       <MatrixEffect />
+      <ConfigButton onClick={handleConfigClick}/>
+      <ConfigModal
+        isOpen={configModalOpen}
+        onClose={() => setConfigModalOpen(false)}
+        onSave={handleConfigSave}
+      />
       <AnimatedContent>
         <header className="App-header">
           <ApplicationTittle />
           <SearchInput onSearch={(value) => setSearchValue(value)} />
         </header>
         <Header onClick={() => setCreateNoteModalOpen(true)} />
-        <CardNoteGrid>
+        <CardNoteGrid cardConfig={cardConfig}>
           {Array.isArray(notes) && notes.length > 0 ? (
             (filteredNotes.length > 0 && searchValue !== '' 
               ? [...filteredNotes] 
@@ -110,6 +143,7 @@ function App() {
                 description={note.content}
                 onEdit={() => handleOnEditNote(note)}
                 onRemove={() => handleOnRemoveNote(note.id)}
+                cardConfig={cardConfig}
               />
             ))
           ) : (
